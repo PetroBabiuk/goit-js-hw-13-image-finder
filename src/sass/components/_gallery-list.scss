@@ -1,0 +1,39 @@
+.card {
+  &-text {
+    background-color: azure;
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.88;
+    text-decoration: none;
+  }
+
+  &-item {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  @include screen('tablet') {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+
+    &-item {
+      width: 354px;
+      margin: 15px;
+    }
+
+    &-img {
+      width: 354px;
+      height: 294px;
+    }
+  }
+  @include screen('desktop') {
+    &-item {
+      width: 370px;
+    }
+
+    &-img {
+      width: 370px;
+    }
+  }
+}

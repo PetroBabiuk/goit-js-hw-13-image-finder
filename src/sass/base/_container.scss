@@ -1,0 +1,16 @@
+.container {
+  // общие стили контейнера:
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+
+  @include screen('mobile') {
+    width: 480px;
+  }
+  @include screen('tablet') {
+    width: 768px;
+  }
+  @include screen('desktop') {
+    width: 1200px;
+  }
+}

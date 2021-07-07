@@ -4,4 +4,11 @@
  */
 
 // Стили для файла с примером HTML-фрагмента
-@import './example';
+// @import './example';
+@import './utilites/mixins';
+@import './components/loader';
+@import './utilites/is-hidden';
+@import './base/common';
+@import './base/container';
+@import './components/gallery-list';
+@import './components/form';
