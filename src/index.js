@@ -23,11 +23,6 @@ const refs = {
     loadMoreBtn: document.querySelector('.load-more-btn'),
 }
 
-refs.loadMoreBtn.scrollIntoView({
-    behavior: 'smooth',
-    block: 'end',
-})
-
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchImages);
 
@@ -56,6 +51,10 @@ function fetchImages() {
             loadMoreBtn.enable();
             refs.spinner.classList.add('is-hidden');
             refs.searchBtn.removeAttribute('disabled');
+            refs.loadMoreBtn.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+            })
         });
 }
 
