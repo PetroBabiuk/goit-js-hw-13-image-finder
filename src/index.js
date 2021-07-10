@@ -91,22 +91,8 @@ function clearImagesContainer() {
     refs.imageGallery.innerHTML = '';
 }
 
-// function onGalleryElementClick(event) {
-//     event.preventDefault();
-//     if (event.target.nodeName !== "IMG") return;
-//     onModalOpen();
-//     openModalWithBigImage(target);
-    // setModalImage(event);
-//   window.addEventListener("keydown", onEscPress);
-//   window.addEventListener("keydown", onArrowPress);
-// }
-
-function setModalImage(event) {
-  modalImageRef.src = event.target.dataset.source;
-  modalImageRef.alt = event.target.alt;
-}
-
 function onModalOpen() {
+  window.addEventListener("keydown", onEscPress);
   lightBoxRef.classList.add("is-open");
   refs.spinnerModal.classList.remove('is-hidden');
 }
@@ -126,16 +112,12 @@ function onBackdropClickClose(event) {
 }
 
 function openModalWithBigImage(element) {
-    imagesApiService.page = 1;
-    imagesApiService.fetchImages()
-        .then(images => {
-            console.log(images);
-            const image = images.find(image => image.id === Number(element.alt));
-            console.log(image);
-            refs.spinnerModal.classList.add('is-hidden');
-            modalImageRef.src = image.largeImageURL;
-            modalImageRef.alt = image.id;
-        });
+    const array = [...document.querySelectorAll('img.card-img')];
+      const image = array.find(image => image.alt === element.alt);
+    refs.spinnerModal.classList.add('is-hidden');
+    modalImageRef.src = image.srcset;
+    modalImageRef.alt = image.id;
+  ; 
 }
 
 function onImageClick(e) {
@@ -152,19 +134,3 @@ function onEscPress(event) {
     onModalCloseButton(event);
   }
 }
-
-// function openModalWithBigImage(element) {
-//     imagesApiService.page = 1;
-//     imagesApiService.fetchImages()
-//         .then(images => {
-//             console.log(images);
-//             const image = images.find(image => image.id === Number(element.alt));
-//             console.log(image);
-//             basicLightbox.create(`
-// 		<img class="big-image" src=${image.largeImageURL} alt="${element.alt}" />
-// 	`).show()
-//         });
-    
-// refs.imageGallery.addEventListener('click', onImageClick);
-//             import * as basicLightbox from 'basiclightbox'
-// }
