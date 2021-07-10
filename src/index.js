@@ -24,7 +24,27 @@ const refs = {
 }
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', fetchImages);
+loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
+
+function onLoadMore () {
+    loadMoreBtn.disable();
+    refs.spinner.classList.remove('is-hidden');
+    imagesApiService.fetchImages()
+        .then(images => {
+            if (images.length === 0) {
+                alert('Please, try to search something else');
+                
+            }
+            appendImagesMarkup(images);
+            loadMoreBtn.enable();
+            refs.spinner.classList.add('is-hidden');
+            refs.searchBtn.removeAttribute('disabled');
+            refs.loadMoreBtn.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+            })
+        });
+}
 
 function onSearch(e) {
     e.preventDefault();
@@ -51,10 +71,6 @@ function fetchImages() {
             loadMoreBtn.enable();
             refs.spinner.classList.add('is-hidden');
             refs.searchBtn.removeAttribute('disabled');
-            refs.loadMoreBtn.scrollIntoView({
-                behavior: 'smooth',
-                block: 'end',
-            })
         });
 }
 
