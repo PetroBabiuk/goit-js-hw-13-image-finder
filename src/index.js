@@ -65,3 +65,29 @@ function appendImagesMarkup(images) {
 function clearImagesContainer() {
     refs.imageGallery.innerHTML = '';
 }
+
+// refs.imageGallery.addEventListener('click', onImageClick);
+//             import * as basicLightbox from 'basiclightbox'
+// }
+
+// function onImageClick(e) {
+//     e.preventDefault();
+//     const target = e.target;
+
+//     if (target.nodeName !== "IMG") return;
+
+//   openModalWithBigImage(target);
+// }
+
+// function openModalWithBigImage(element) {
+//     imagesApiService.page = 1;
+//     imagesApiService.fetchImages()
+//         .then(images => {
+//             console.log(images);
+//             const image = images.find(image => image.id === Number(element.alt));
+//             console.log(image);
+//             basicLightbox.create(`
+// 		<img class="big-image" src=${image.largeImageURL} alt="${element.alt}" />
+// 	`).show()
+//         });
+    
