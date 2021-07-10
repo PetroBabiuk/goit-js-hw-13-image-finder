@@ -20,11 +20,20 @@ const refs = {
     imageGallery: document.querySelector('.gallery'),
     searchBtn: document.querySelector('.btn-search'),
     spinner: document.querySelector('.loader'),
+    spinnerModal: document.querySelector('.loader-in-lightbox'),
     loadMoreBtn: document.querySelector('.load-more-btn'),
 }
 
+const lightBoxRef = document.querySelector('.js-lightbox');
+const modalImageRef = document.querySelector('.lightbox__image');
+const closeButtonRef = document.querySelector('.lightbox__button');
+
+
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
+refs.imageGallery.addEventListener('click', onImageClick);
+closeButtonRef.addEventListener('click', onModalCloseButton);
+lightBoxRef.addEventListener('click', onBackdropClickClose);
 
 function onLoadMore () {
     loadMoreBtn.disable();
@@ -82,18 +91,67 @@ function clearImagesContainer() {
     refs.imageGallery.innerHTML = '';
 }
 
-// refs.imageGallery.addEventListener('click', onImageClick);
-//             import * as basicLightbox from 'basiclightbox'
+// function onGalleryElementClick(event) {
+//     event.preventDefault();
+//     if (event.target.nodeName !== "IMG") return;
+//     onModalOpen();
+//     openModalWithBigImage(target);
+    // setModalImage(event);
+//   window.addEventListener("keydown", onEscPress);
+//   window.addEventListener("keydown", onArrowPress);
 // }
 
-// function onImageClick(e) {
-//     e.preventDefault();
-//     const target = e.target;
+function setModalImage(event) {
+  modalImageRef.src = event.target.dataset.source;
+  modalImageRef.alt = event.target.alt;
+}
 
-//     if (target.nodeName !== "IMG") return;
+function onModalOpen() {
+  lightBoxRef.classList.add("is-open");
+  refs.spinnerModal.classList.remove('is-hidden');
+}
 
-//   openModalWithBigImage(target);
-// }
+function onModalCloseButton(event) {
+  lightBoxRef.classList.remove("is-open");
+    modalImageRef.src = "";
+    modalImageRef.alt = "";
+    
+  window.removeEventListener("keydown", onEscPress);
+}
+
+function onBackdropClickClose(event) {
+  if (event.target.nodeName !== "IMG") {
+    onModalCloseButton(event);
+  }
+}
+
+function openModalWithBigImage(element) {
+    imagesApiService.page = 1;
+    imagesApiService.fetchImages()
+        .then(images => {
+            console.log(images);
+            const image = images.find(image => image.id === Number(element.alt));
+            console.log(image);
+            refs.spinnerModal.classList.add('is-hidden');
+            modalImageRef.src = image.largeImageURL;
+            modalImageRef.alt = image.id;
+        });
+}
+
+function onImageClick(e) {
+    e.preventDefault();
+    const target = e.target;
+
+    if (target.nodeName !== "IMG") return;
+    onModalOpen();  
+    openModalWithBigImage(target);
+}
+
+function onEscPress(event) {
+  if (event.key === "Escape") {
+    onModalCloseButton(event);
+  }
+}
 
 // function openModalWithBigImage(element) {
 //     imagesApiService.page = 1;
@@ -107,3 +165,6 @@ function clearImagesContainer() {
 // 	`).show()
 //         });
     
+// refs.imageGallery.addEventListener('click', onImageClick);
+//             import * as basicLightbox from 'basiclightbox'
+// }
